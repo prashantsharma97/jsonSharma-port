@@ -12,6 +12,31 @@ import { Galaxy } from './components/Galaxy';
 function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [audioLoaded, setAudioLoaded] = useState(false);
+  const [theme, setTheme] = useState('dark');
+
+  useEffect(() => {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    setTheme(currentTheme);
+    document.documentElement.setAttribute('data-theme', currentTheme);
+  }, []);
+
+  useEffect(() => {
+    const particlesContainer = document.createElement('div');
+    particlesContainer.className = 'particles';
+    document.body.appendChild(particlesContainer);
+
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.animationDelay = `${Math.random() * 5}s`;
+      particlesContainer.appendChild(particle);
+    }
+
+    return () => {
+      document.body.removeChild(particlesContainer);
+    };
+  }, []);
 
   useEffect(() => {
     const audio = new Audio('/audio.mp4');
@@ -65,23 +90,34 @@ function App() {
     if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return (
-    <div className="min-h-screen bg-background text-secondary relative">
-      {/* Background Canvas */}
-      <Canvas camera={{ position: [0, 0, 5] }} className="absolute top-0 left-0 w-full h-full">
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 5, 5]} />
-        <Galaxy />
-        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
-        <Stars radius={100} depth={50} count={5000} factor={4} fade />
-      </Canvas>
+  const handleThemeChange = (newTheme: string) => {
+    setTheme(newTheme);
+  };
 
-      <Navigation activeSection={activeSection} scrollToSection={scrollToSection} />
-      <Home scrollToSection={scrollToSection} />
-      <About />
-      <Work />
-      <Contact />
-      <Footer />
+  return (
+    <div className="relative min-h-screen bg-background text-secondary overflow-x-hidden">
+      <div className="fixed inset-0 z-0">
+        <Canvas camera={{ position: [0, 0, 5] }}>
+          <ambientLight intensity={0.5} />
+          <directionalLight position={[5, 5, 5]} />
+          <Galaxy />
+          <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
+          <Stars radius={100} depth={50} count={5000} factor={4} fade />
+        </Canvas>
+      </div>
+
+      <div className="relative z-10">
+        <Navigation 
+          activeSection={activeSection} 
+          scrollToSection={scrollToSection} 
+          onThemeChange={handleThemeChange}
+        />
+        <Home scrollToSection={scrollToSection} />
+        <About />
+        <Work />
+        <Contact />
+        <Footer />
+      </div>
     </div>
   );
 }

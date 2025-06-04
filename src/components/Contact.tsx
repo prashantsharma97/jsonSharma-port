@@ -39,7 +39,7 @@ export const Contact: FC = () => {
   return (
     <section id="contact" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-20">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center space-y-4 mb-12">
+        <div className="text-center space-y-4 mb-12 animate-fade-in-up">
           <h2 className="text-3xl font-bold">Let's Create Something Amazing</h2>
           <p className="text-secondary/80">
             I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.

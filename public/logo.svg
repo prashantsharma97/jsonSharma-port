@@ -1,27 +1,4 @@
-import { FC } from 'react';
-import { Sun, Moon } from 'lucide-react';
-
-interface NavigationProps {
-  activeSection: string;
-  scrollToSection: (sectionId: string) => void;
-  onThemeChange: (theme: string) => void;
-}
-
-export const Navigation: FC<NavigationProps> = ({ activeSection, scrollToSection, onThemeChange }) => {
-  const toggleTheme = () => {
-    const root = document.documentElement;
-    const currentTheme = root.getAttribute('data-theme');
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-    root.setAttribute('data-theme', newTheme);
-    onThemeChange(newTheme);
-  };
-
-  return (
-    <nav className="fixed w-full top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-secondary/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2 text-2xl md:text-3xl font-extrabold gradient-text tracking-tight drop-shadow-md transition-transform duration-300 hover:scale-105 cursor-pointer">
-            <svg className="w-7 h-7" fill="#22c55e" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+<svg className="w-7 h-7" fill="#22c55e" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
               viewBox="0 0 58 58" xml:space="preserve">
               <g>
                 <path d="M33.655,45.988c-0.232-0.31-0.497-0.533-0.793-0.67s-0.608-0.205-0.937-0.205c-0.337,0-0.658,0.063-0.964,0.191
@@ -60,22 +37,3 @@ export const Navigation: FC<NavigationProps> = ({ activeSection, scrollToSection
 		h1.668V54z"/>
               </g>
             </svg>
-            JsonSharma
-          </div>
-          <div className="flex items-center space-x-4">
-            <div className="hidden md:flex space-x-2">
-              <button onClick={() => scrollToSection('home')} className={`nav-item ${activeSection === 'home' ? 'text-primary' : ''}`}>Home</button>
-              <button onClick={() => scrollToSection('about')} className={`nav-item ${activeSection === 'about' ? 'text-primary' : ''}`}>About</button>
-              <button onClick={() => scrollToSection('work')} className={`nav-item ${activeSection === 'work' ? 'text-primary' : ''}`}>Work</button>
-              <button onClick={() => scrollToSection('contact')} className={`nav-item ${activeSection === 'contact' ? 'text-primary' : ''}`}>Contact</button>
-            </div>
-            <button onClick={toggleTheme} className="theme-switch">
-              <Sun className="hidden dark:block" size={20} />
-              <Moon className="block dark:hidden" size={20} />
-            </button>
-          </div>
-        </div>
-      </div>
-    </nav>
-  );
-}
